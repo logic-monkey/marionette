@@ -10,11 +10,21 @@ config_version=5
 
 [application]
 
-config/name="marionette"
+config/name="Geppetto"
+run/main_scene="res://basis.tscn"
 config/use_custom_user_dir=true
 config/custom_user_dir_name="ehe"
 config/features=PackedStringArray("4.2", "GL Compatibility")
 config/icon="res://icon.svg"
+
+[autoload]
+
+_INIT="*res://addons/init/intializer.gd"
+_FileBoss="*res://FileBoss.gd"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/init/plugin.cfg")
 
 [rendering]
 

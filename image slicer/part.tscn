@@ -1,0 +1,41 @@
+[gd_scene load_steps=3 format=3 uid="uid://dsi8v7yfdast2"]
+
+[ext_resource type="Script" path="res://image slicer/part.gd" id="1_dsrj5"]
+[ext_resource type="Texture2D" uid="uid://5xbq21nwnn4w" path="res://buttons for vpet_trash.png" id="2_crxk8"]
+
+[node name="part" type="Control"]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -952.0
+offset_bottom = -448.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_dsrj5")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(100, 80)
+region_enabled = true
+
+[node name="TextureButton" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 161.0
+offset_top = 1.0
+offset_right = 199.0
+offset_bottom = 52.0
+texture_normal = ExtResource("2_crxk8")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="LineEdit" type="LineEdit" parent="."]
+layout_mode = 0
+offset_left = 6.0
+offset_top = 166.0
+offset_right = 193.0
+offset_bottom = 197.0
+placeholder_text = "name"
+
+[connection signal="pressed" from="TextureButton" to="." method="balete"]
+[connection signal="text_changed" from="LineEdit" to="." method="_on_line_edit_text_changed"]

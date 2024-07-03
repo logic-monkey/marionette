@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://bp3bklid6bs00"]
+
+[node name="Fialogue" type="FileDialog"]
+size = Vector2i(454, 159)
+dialog_hide_on_ok = true
+access = 2
+use_native_dialog = true

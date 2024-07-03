@@ -1,0 +1,143 @@
+[gd_scene load_steps=9 format=3 uid="uid://c478ou33cxge3"]
+
+[ext_resource type="Script" path="res://frame maker/frame_maker.gd" id="1_6lp3w"]
+[ext_resource type="Script" path="res://frame maker/frame_parts_tree.gd" id="1_7gxrt"]
+[ext_resource type="Script" path="res://frame maker/frame_workspace.gd" id="1_ispjw"]
+[ext_resource type="Script" path="res://frame maker/frame_origin.gd" id="1_msbji"]
+[ext_resource type="PackedScene" uid="uid://6vha1wbtf8ey" path="res://frame maker/part_manipulator.tscn" id="3_42qyf"]
+[ext_resource type="Script" path="res://frame maker/framaker_frame_list.gd" id="3_88qlb"]
+[ext_resource type="Script" path="res://frame maker/framaker_cur_frame_tree.gd" id="6_46fmt"]
+[ext_resource type="Script" path="res://frame maker/frame_menu.gd" id="7_cbyu6"]
+
+[node name="Frame Maker" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_6lp3w")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="left menu" type="VBoxContainer" parent="HBoxContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer/left menu"]
+layout_mode = 2
+text = "Parts:"
+
+[node name="parts_container" type="ScrollContainer" parent="HBoxContainer/left menu"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="parts_tree" type="Tree" parent="HBoxContainer/left menu/parts_container" groups=["slice_manager"]]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/draw_relationship_lines = 1
+columns = 2
+hide_root = true
+script = ExtResource("1_7gxrt")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/left menu"]
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="HBoxContainer/left menu/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Frames
+"
+
+[node name="sort_frames" type="Button" parent="HBoxContainer/left menu/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = " sort "
+
+[node name="new_frame" type="Button" parent="HBoxContainer/left menu/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = " + "
+
+[node name="frames_container" type="ScrollContainer" parent="HBoxContainer/left menu"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="frame_list" type="ItemList" parent="HBoxContainer/left menu/frames_container" groups=["frame_manager"]]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("3_88qlb")
+
+[node name="workspace" type="Control" parent="HBoxContainer"]
+clip_contents = true
+layout_mode = 2
+size_flags_horizontal = 3
+script = ExtResource("1_ispjw")
+
+[node name="origin" type="Marker2D" parent="HBoxContainer/workspace"]
+unique_name_in_owner = true
+script = ExtResource("1_msbji")
+
+[node name="right menu" type="VBoxContainer" parent="HBoxContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+
+[node name="Current Frame" type="Label" parent="HBoxContainer/right menu"]
+layout_mode = 2
+text = "Current Frame:"
+
+[node name="cur_frame_name" type="LineEdit" parent="HBoxContainer/right menu"]
+unique_name_in_owner = true
+layout_mode = 2
+placeholder_text = "frame name"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="HBoxContainer/right menu"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="cur_frame_tree" type="Tree" parent="HBoxContainer/right menu/ScrollContainer" groups=["frame_bits_manager"]]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+columns = 2
+hide_root = true
+drop_mode_flags = 2
+select_mode = 2
+scroll_horizontal_enabled = false
+script = ExtResource("6_46fmt")
+
+[node name="part manipulator" parent="HBoxContainer/right menu" instance=ExtResource("3_42qyf")]
+layout_mode = 2
+
+[node name="frame_menu" type="PopupMenu" parent="."]
+unique_name_in_owner = true
+size = Vector2i(122, 100)
+item_count = 3
+item_0/text = "Onion"
+item_0/id = 0
+item_1/text = "X DELETE"
+item_1/id = 1
+item_2/text = "Duplicate"
+item_2/id = 2
+script = ExtResource("7_cbyu6")
+
+[connection signal="button_clicked" from="HBoxContainer/left menu/parts_container/parts_tree" to="HBoxContainer/left menu/parts_container/parts_tree" method="_on_button_clicked"]
+[connection signal="pressed" from="HBoxContainer/left menu/HBoxContainer/sort_frames" to="HBoxContainer/left menu/frames_container/frame_list" method="_on_sort_frames_pressed"]
+[connection signal="pressed" from="HBoxContainer/left menu/HBoxContainer/new_frame" to="HBoxContainer/left menu/frames_container/frame_list" method="_on_new_frame_pressed"]
+[connection signal="item_clicked" from="HBoxContainer/left menu/frames_container/frame_list" to="HBoxContainer/left menu/frames_container/frame_list" method="_on_item_clicked"]
+[connection signal="item_selected" from="HBoxContainer/left menu/frames_container/frame_list" to="HBoxContainer/left menu/frames_container/frame_list" method="_on_item_selected"]
+[connection signal="text_submitted" from="HBoxContainer/right menu/cur_frame_name" to="HBoxContainer/left menu/frames_container/frame_list" method="_on_cur_frame_name_text_submitted"]
+[connection signal="about_to_popup" from="frame_menu" to="frame_menu" method="_on_about_to_popup"]
+[connection signal="id_pressed" from="frame_menu" to="HBoxContainer/left menu/frames_container/frame_list" method="_on_frame_menu_id_pressed"]
+[connection signal="popup_hide" from="frame_menu" to="HBoxContainer/left menu/frames_container/frame_list" method="_on_frame_menu_popup_hide"]

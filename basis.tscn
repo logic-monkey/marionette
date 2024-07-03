@@ -1,0 +1,67 @@
+[gd_scene load_steps=5 format=3 uid="uid://b7sn5waexi8o3"]
+
+[ext_resource type="Script" path="res://basis.gd" id="1_puhqd"]
+[ext_resource type="PackedScene" uid="uid://cyc10rmx62s1n" path="res://image slicer/image_slicer.tscn" id="2_5lfr6"]
+[ext_resource type="PackedScene" uid="uid://bp3bklid6bs00" path="res://fialogue.tscn" id="2_rxnsb"]
+[ext_resource type="PackedScene" uid="uid://c478ou33cxge3" path="res://frame maker/frame_maker.tscn" id="3_cpugi"]
+
+[node name="Basis" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_puhqd")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="menu" type="MenuButton" parent="VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Menu"
+item_count = 4
+popup/item_0/text = "+ New"
+popup/item_0/id = 0
+popup/item_1/text = "Load..."
+popup/item_1/id = 1
+popup/item_2/text = "Save"
+popup/item_2/id = 2
+popup/item_3/text = "Save As..."
+popup/item_3/id = 3
+
+[node name="CheckBox" type="CheckBox" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Pixel Snap"
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Nobody here but us chickens."
+horizontal_alignment = 2
+
+[node name="TabContainer" type="TabContainer" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Image Slicer" parent="VBoxContainer/TabContainer" instance=ExtResource("2_5lfr6")]
+layout_mode = 2
+
+[node name="Frame Maker" parent="VBoxContainer/TabContainer" instance=ExtResource("3_cpugi")]
+visible = false
+layout_mode = 2
+
+[node name="Fialogue" parent="." instance=ExtResource("2_rxnsb")]
+
+[connection signal="canceled" from="Fialogue" to="." method="_on_fialogue_canceled"]
+[connection signal="file_selected" from="Fialogue" to="." method="_on_fialogue_file_selected"]
