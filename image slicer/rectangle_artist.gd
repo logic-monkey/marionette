@@ -13,8 +13,8 @@ func _draw():
 	if not "slices" in _FileBoss.data.images[current_image]: return
 	for slice in _FileBoss.data.images[current_image].slices:
 		var r = slice.rect as Rect2
-		r.position *= owner.zoom
-		r.size *= owner.zoom
+		r.position *= _FileBoss.zoom
+		r.size *= _FileBoss.zoom
 		r.position += pos
 		draw_rect(r, Color(0.0,0.0,0.0,0.25), false, 1.0)
 		draw_rect(r, Color(1.0,1.0,0.0,0.5), false, 1.0)

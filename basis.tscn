@@ -39,9 +39,35 @@ popup/item_2/id = 2
 popup/item_3/text = "Save As..."
 popup/item_3/id = 3
 
+[node name="VSeparator" type="VSeparator" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 30
+
 [node name="CheckBox" type="CheckBox" parent="VBoxContainer/HBoxContainer"]
+visible = false
 layout_mode = 2
 text = "Pixel Snap"
+
+[node name="Label2" type="Label" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Zoom: "
+
+[node name="zoom_out" type="Button" parent="VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = " - "
+
+[node name="zoom_edit" type="LineEdit" parent="VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+text = "100"
+alignment = 2
+
+[node name="zoom_in" type="Button" parent="VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = " + "
 
 [node name="Label" type="Label" parent="VBoxContainer/HBoxContainer"]
 layout_mode = 2
@@ -63,5 +89,8 @@ layout_mode = 2
 
 [node name="Fialogue" parent="." instance=ExtResource("2_rxnsb")]
 
+[connection signal="button_down" from="VBoxContainer/HBoxContainer/zoom_out" to="." method="_on_zoom_out_button_down"]
+[connection signal="text_submitted" from="VBoxContainer/HBoxContainer/zoom_edit" to="." method="_on_zoom_edit_text_submitted"]
+[connection signal="button_down" from="VBoxContainer/HBoxContainer/zoom_in" to="." method="_on_zoom_in_button_down"]
 [connection signal="canceled" from="Fialogue" to="." method="_on_fialogue_canceled"]
 [connection signal="file_selected" from="Fialogue" to="." method="_on_fialogue_file_selected"]

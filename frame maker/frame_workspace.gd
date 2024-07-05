@@ -7,3 +7,6 @@ func _process(_delta):
 	l.y *= 0.6667
 	l += offset
 	%origin.position = l
+
+func _input(event):
+	pass

@@ -1,5 +1,8 @@
 extends Control
 
+func _ready():
+	_FileBoss.zoom_changed.connect(set_image_size)
+
 var current_image :String = ""
 func _on_add_image_pressed():
 	var f : FileDialog = _FileBoss.fialogue
@@ -62,14 +65,14 @@ func _on_image_list_item_selected(index):
 	
 var is_dragging : bool = false
 var current_rect = -1
-var zoom : float = 1.0
+#var zoom : float = 1.0
 func _input(event: InputEvent):
 	if not visible: return
 	if not %image_window.get_rect().has_point(%image_window.get_parent().get_local_mouse_position()): return
 	if current_image.is_empty(): return
 	var cur = _FileBoss.data.images[current_image]
 	var img_rect = %current_image.get_global_rect()
-	var mouse = %current_image.get_local_mouse_position() / zoom
+	var mouse = %current_image.get_local_mouse_position() / _FileBoss.zoom
 	if not is_dragging and event is InputEventMouseButton\
 			and event.button_index == 1 and event.pressed\
 			and img_rect.has_point(event.position):
@@ -98,7 +101,7 @@ func _input(event: InputEvent):
 		update_part_list()
 		get_tree().call_group("slice_manager", "populate")
 	elif is_dragging and event is InputEventMouseMotion:
-		var loc = (mouse).clamp(Vector2.ZERO, %current_image.get_rect().size/zoom)
+		var loc = (mouse).clamp(Vector2.ZERO, %current_image.get_rect().size/_FileBoss.zoom)
 		var r = cur.slices[current_rect].initial_point
 		r = r.expand(loc)
 		
@@ -109,9 +112,9 @@ func _input(event: InputEvent):
 	elif event is InputEventMouseButton and event.shift_pressed and event.pressed\
 			and (event.button_index == MOUSE_BUTTON_WHEEL_UP or event.button_index == MOUSE_BUTTON_WHEEL_DOWN):
 		if event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
-			zoom = clampf(zoom -0.1, 0.1, 10.0)
+			_FileBoss.zo00m -= 0.1
 		else:
-			zoom = clampf(zoom +0.1, 0.1, 10.0)
+			_FileBoss.zoom += 0.1
 		set_image_size()
 		%rectangle_artist.current_image = current_image
 		%rectangle_artist.call_deferred("queue_redraw")
@@ -119,7 +122,7 @@ func _input(event: InputEvent):
 		
 func set_image_size():
 	if current_image.is_empty(): return
-	%current_image.custom_minimum_size = _FileBoss.images[current_image].get_size() * zoom
+	%current_image.custom_minimum_size = _FileBoss.images[current_image].get_size() * _FileBoss.zoom
 	%current_image.pivot_offset = %current_image.custom_minimum_size/2
 	
 var scrollx = 0

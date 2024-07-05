@@ -113,11 +113,12 @@ size_flags_vertical = 3
 columns = 2
 hide_root = true
 drop_mode_flags = 2
-select_mode = 2
+select_mode = 1
 scroll_horizontal_enabled = false
 script = ExtResource("6_46fmt")
 
 [node name="part manipulator" parent="HBoxContainer/right menu" instance=ExtResource("3_42qyf")]
+unique_name_in_owner = true
 layout_mode = 2
 
 [node name="frame_menu" type="PopupMenu" parent="."]
@@ -138,6 +139,9 @@ script = ExtResource("7_cbyu6")
 [connection signal="item_clicked" from="HBoxContainer/left menu/frames_container/frame_list" to="HBoxContainer/left menu/frames_container/frame_list" method="_on_item_clicked"]
 [connection signal="item_selected" from="HBoxContainer/left menu/frames_container/frame_list" to="HBoxContainer/left menu/frames_container/frame_list" method="_on_item_selected"]
 [connection signal="text_submitted" from="HBoxContainer/right menu/cur_frame_name" to="HBoxContainer/left menu/frames_container/frame_list" method="_on_cur_frame_name_text_submitted"]
+[connection signal="button_clicked" from="HBoxContainer/right menu/ScrollContainer/cur_frame_tree" to="HBoxContainer/right menu/ScrollContainer/cur_frame_tree" method="_on_button_clicked"]
+[connection signal="item_selected" from="HBoxContainer/right menu/ScrollContainer/cur_frame_tree" to="HBoxContainer/right menu/ScrollContainer/cur_frame_tree" method="_on_item_selected"]
+[connection signal="part_updated" from="HBoxContainer/right menu/part manipulator" to="HBoxContainer/right menu/ScrollContainer/cur_frame_tree" method="_on_part_manipulator_part_updated"]
 [connection signal="about_to_popup" from="frame_menu" to="frame_menu" method="_on_about_to_popup"]
 [connection signal="id_pressed" from="frame_menu" to="HBoxContainer/left menu/frames_container/frame_list" method="_on_frame_menu_id_pressed"]
 [connection signal="popup_hide" from="frame_menu" to="HBoxContainer/left menu/frames_container/frame_list" method="_on_frame_menu_popup_hide"]

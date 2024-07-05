@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="Geppetto"
+config/name="Gepetto"
 run/main_scene="res://basis.tscn"
 config/use_custom_user_dir=true
 config/custom_user_dir_name="ehe"
